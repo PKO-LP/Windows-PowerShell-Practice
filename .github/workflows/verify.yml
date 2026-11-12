@@ -20,7 +20,7 @@ jobs:
           $PSVersionTable.PSVersion
           if ($PSVersionTable.PSVersion.ToString() -notlike '5.1.*') { throw 'Expected Windows PowerShell 5.1' }
           $md = Get-Content -LiteralPath README.md -Raw -Encoding UTF8
-          $lessons = [regex]::Matches($md, '(?ms)^## Пара ([123])\..*?(?=^## |\z)')
+          $lessons = [regex]::Matches($md, '(?ms)^## [^\r\n]+ ([123])\..*?(?=^## |\z)')
           if ($lessons.Count -ne 3) { throw 'Expected three pairs' }
           function Check-Lines($path, $expected) {
             $lines = @(Get-Content -LiteralPath $path -Encoding UTF8)
