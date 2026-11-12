@@ -36,12 +36,13 @@ jobs:
               $lines += $command
               $lines += 'if errorlevel 1 exit /b 1'
             }
-            $lines += "echo %LAB%>`"$pathFile`""
+            $lines += "> `"$pathFile`" echo %LAB%"
             $lines += 'exit /b 0'
             Set-Content -LiteralPath $batch -Value $lines -Encoding ASCII
             & cmd.exe /d /v:off /c $batch
             if ($LASTEXITCODE -ne 0) { throw "CMD failed in pair $pair" }
             $root = (Get-Content -LiteralPath $pathFile).Trim()
+            if (-not (Test-Path -LiteralPath $root -PathType Container)) { throw 'Lab path was not captured' }
             if ((Get-Content -LiteralPath (Join-Path $root 'warmup\hello.txt')) -cne 'Hello Windows') { throw 'Warmup content differs' }
             foreach ($n in 2..15) {
               $case = Join-Path $root ('case{0:00}' -f $n)
