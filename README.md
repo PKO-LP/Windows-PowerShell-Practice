@@ -14,6 +14,8 @@ $PSVersionTable.PSVersion
 
 В выводе в столбцах Major и Minor должны быть **5** и **1**. Если открылась «Командная строка» или PowerShell 7, вернитесь к шагу 1.
 
+Иллюстрации «До → После» показывают состояние файлов или пример вывода. На вашем ПК пути и дата будут своими.
+
 Копируйте только команды из серых блоков. Вводите по одной строке. Ожидаемый вывод из текста под блоком вводить не нужно. Если команда завершилась красной ошибкой, сначала исправьте её, затем продолжайте.
 
 Каждая пара создаёт новые папки с датой и временем в названии. Выполняйте работу в одном окне PowerShell. Если начинаете пару заново, пройдите её с первого шага, чтобы получить новую папку.
@@ -51,6 +53,8 @@ $docs = [Environment]::GetFolderPath('MyDocuments')
 $docs
 ```
 
+![Шаг 1.1. До: Путь к «Документам» ещё не записан. После: $docs / C:\Users\Student\Documents.](images/step-1-1.png)
+
 **Что должно получиться**
 
 Показывается полный путь к «Документам». Он может вести в OneDrive.
@@ -70,6 +74,8 @@ Windows сама сообщает, где находятся «Документ�
 ```powershell
 Test-Path -LiteralPath $docs -PathType Container
 ```
+
+![Шаг 1.2. До: В $docs записан адрес «Документов». После: True / PowerShell нашёл папку.](images/step-1-2.png)
 
 **Что должно получиться**
 
@@ -93,6 +99,8 @@ $lab = Join-Path $docs "Console-Lab-1-$stamp"
 $lab
 ```
 
+![Шаг 1.3. До: Известна папка «Документы». После: $lab / C:\Users\Student\Documents\ / Console-Lab-1-20261112-090000.](images/step-1-3.png)
+
 **Что должно получиться**
 
 Путь заканчивается на `Console-Lab-1-` и дату со временем.
@@ -115,6 +123,8 @@ Set-Location -LiteralPath $lab
 Get-Location
 ```
 
+![Шаг 1.4. До: Путь записан в $lab / Папки по этому пути ещё нет. После: Папка Console-Lab-1-… создана / Get-Location показывает эту папку.](images/step-1-4.png)
+
 **Что должно получиться**
 
 Последняя команда показывает путь к новой папке.
@@ -135,6 +145,8 @@ Get-Location
 New-Item -ItemType Directory -Path 'original'
 Get-ChildItem -Name
 ```
+
+![Шаг 1.5. До: Учебная папка пуста. После: original / Внутри учебной папки появилась подпапка.](images/step-1-5.png)
 
 **Что должно получиться**
 
@@ -157,6 +169,8 @@ New-Item -ItemType File -Path 'original\request.txt'
 Test-Path -LiteralPath 'original\request.txt' -PathType Leaf
 ```
 
+![Шаг 1.6. До: Папка original пуста. После: original\request.txt — пустой файл / True.](images/step-1-6.png)
+
 **Что должно получиться**
 
 Проверка возвращает `True`.
@@ -176,6 +190,8 @@ Test-Path -LiteralPath 'original\request.txt' -PathType Leaf
 ```powershell
 Set-Content -LiteralPath 'original\request.txt' -Value 'Обращение: подготовить учебный отчёт' -Encoding UTF8
 ```
+
+![Шаг 1.7. До: original\request.txt / Файл пуст. После: original\request.txt / Обращение: подготовить учебный отчёт.](images/step-1-7.png)
 
 **Что должно получиться**
 
@@ -197,6 +213,8 @@ Set-Content -LiteralPath 'original\request.txt' -Value 'Обращение: по
 Add-Content -LiteralPath 'original\request.txt' -Value 'Статус: принято' -Encoding UTF8
 ```
 
+![Шаг 1.8. До: original\request.txt / Обращение: подготовить учебный отчёт. После: original\request.txt / Обращение: подготовить учебный отчёт / Статус: принято.](images/step-1-8.png)
+
 **Что должно получиться**
 
 Первая строка сохраняется, вторая добавляется в конец.
@@ -216,6 +234,8 @@ Add-Content -LiteralPath 'original\request.txt' -Value 'Статус: приня
 ```powershell
 Get-Content -LiteralPath 'original\request.txt' -Encoding UTF8
 ```
+
+![Шаг 1.9. До: Обе строки уже записаны в файл. После: PowerShell выводит текст: / Обращение: подготовить учебный отчёт / Статус: принято.](images/step-1-9.png)
 
 **Что должно получиться**
 
@@ -244,6 +264,8 @@ $file = Join-Path $lab 'original\request.txt'
 notepad.exe "$file"
 ```
 
+![Шаг 1.10. До: Открыт PowerShell / Файл original\request.txt готов. После: Блокнот · request.txt / Обращение: подготовить учебный отчёт / Статус: принято.](images/step-1-10.png)
+
 **Что должно получиться**
 
 В Блокноте открывается файл request.txt с двумя строками.
@@ -266,6 +288,8 @@ Copy-Item -LiteralPath 'original\request.txt' -Destination 'review\request-copy.
 Get-ChildItem -LiteralPath 'review' -Name
 ```
 
+![Шаг 1.11. До: original\request.txt / Папки review ещё нет. После: original\request.txt — на месте / review\request-copy.txt — новая копия.](images/step-1-11.png)
+
 **Что должно получиться**
 
 В `review` есть `request-copy.txt`.
@@ -286,6 +310,8 @@ Get-ChildItem -LiteralPath 'review' -Name
 Rename-Item -LiteralPath 'review\request-copy.txt' -NewName 'request-review.txt'
 Get-ChildItem -LiteralPath 'review' -Name
 ```
+
+![Шаг 1.12. До: review\request-copy.txt. После: review\request-review.txt / Та же папка, новое имя.](images/step-1-12.png)
 
 **Что должно получиться**
 
@@ -308,6 +334,8 @@ Add-Content -LiteralPath 'review\request-review.txt' -Value 'Комментар�
 Get-Content -LiteralPath 'review\request-review.txt' -Encoding UTF8
 ```
 
+![Шаг 1.13. До: review\request-review.txt / Обращение: подготовить учебный отчёт / Статус: принято. После: Обращение: подготовить учебный отчёт / Статус: принято / Комментарий: передано на проверку.](images/step-1-13.png)
+
 **Что должно получиться**
 
 В копии видны три строки.
@@ -328,6 +356,8 @@ Get-Content -LiteralPath 'review\request-review.txt' -Encoding UTF8
 Get-Content -LiteralPath 'original\request.txt' -Encoding UTF8
 Get-ChildItem -Recurse -Name
 ```
+
+![Шаг 1.14. До: В копии уже три строки / Теперь проверяем оригинал. После: original\request.txt — 2 строки / review\request-review.txt — 3 строки.](images/step-1-14.png)
 
 **Что должно получиться**
 
@@ -362,6 +392,8 @@ $docs = [Environment]::GetFolderPath('MyDocuments')
 $docs
 ```
 
+![Шаг 2.1. До: Путь к «Документам» ещё не записан. После: $docs / C:\Users\Student\Documents.](images/step-2-1.png)
+
 **Что должно получиться**
 
 Показывается полный путь к «Документам». Он может вести в OneDrive.
@@ -381,6 +413,8 @@ Windows сама сообщает, где находятся «Документ�
 ```powershell
 Test-Path -LiteralPath $docs -PathType Container
 ```
+
+![Шаг 2.2. До: В $docs записан адрес «Документов». После: True / PowerShell нашёл папку.](images/step-2-2.png)
 
 **Что должно получиться**
 
@@ -404,6 +438,8 @@ $lab = Join-Path $docs "Console-Lab-2-$stamp"
 $lab
 ```
 
+![Шаг 2.3. До: Известна папка «Документы». После: $lab / C:\Users\Student\Documents\ / Console-Lab-2-20261112-104500.](images/step-2-3.png)
+
 **Что должно получиться**
 
 Путь заканчивается на `Console-Lab-2-` и дату со временем.
@@ -426,6 +462,8 @@ Set-Location -LiteralPath $lab
 Get-Location
 ```
 
+![Шаг 2.4. До: Путь отправителя записан в $lab. После: Папка отправителя создана / Она стала текущей папкой.](images/step-2-4.png)
+
 **Что должно получиться**
 
 Последняя команда показывает путь к новой папке.
@@ -446,6 +484,8 @@ Get-Location
 $desktop = [Environment]::GetFolderPath('DesktopDirectory')
 $desktop
 ```
+
+![Шаг 2.5. До: Открыта папка отправителя / Адрес рабочего стола ещё не записан. После: $desktop / C:\Users\Student\Desktop.](images/step-2-5.png)
 
 **Что должно получиться**
 
@@ -468,6 +508,8 @@ $delivery = Join-Path $desktop "Console-Delivery-$stamp"
 New-Item -ItemType Directory -Path $delivery
 $delivery
 ```
+
+![Шаг 2.6. До: Путь к рабочему столу уже известен. После: Рабочий стол /   Console-Delivery-20261112-104500.](images/step-2-6.png)
 
 **Что должно получиться**
 
@@ -498,6 +540,8 @@ New-Item -ItemType Directory -Path $delivery
 Test-Path -LiteralPath $delivery -PathType Container
 ```
 
+![Шаг 2.7. До: Путь к папке передачи хранится в $delivery. После: True / Папка назначения найдена.](images/step-2-7.png)
+
 **Что должно получиться**
 
 Ожидается `True`.
@@ -518,6 +562,8 @@ Test-Path -LiteralPath $delivery -PathType Container
 Set-Content -LiteralPath 'ticket.txt' -Value 'Заявка: передать учебный комплект' -Encoding UTF8
 Add-Content -LiteralPath 'ticket.txt' -Value 'Ответственный: учебная группа' -Encoding UTF8
 ```
+
+![Шаг 2.8. До: Папка отправителя пуста. После: ticket.txt / Заявка: передать учебный комплект / Ответственный: учебная группа.](images/step-2-8.png)
 
 **Что должно получиться**
 
@@ -540,6 +586,8 @@ Copy-Item -LiteralPath 'ticket.txt' -Destination 'ticket-delivery.txt'
 Get-ChildItem -Name
 ```
 
+![Шаг 2.9. До: Документы · папка отправителя /   ticket.txt. После: Документы · папка отправителя /   ticket.txt /   ticket-delivery.txt.](images/step-2-9.png)
+
 **Что должно получиться**
 
 В списке видны `ticket.txt` и `ticket-delivery.txt`.
@@ -559,6 +607,8 @@ Get-ChildItem -Name
 ```powershell
 Move-Item -LiteralPath 'ticket-delivery.txt' -Destination $delivery
 ```
+
+![Шаг 2.10. До: Документы · папка отправителя /   ticket.txt /   ticket-delivery.txt. После: Документы: ticket.txt / Рабочий стол: ticket-delivery.txt / Файлы лежат в учебных папках.](images/step-2-10.png)
 
 **Что должно получиться**
 
@@ -581,6 +631,8 @@ Get-ChildItem -LiteralPath $lab -Name
 Test-Path -LiteralPath 'ticket-delivery.txt' -PathType Leaf
 ```
 
+![Шаг 2.11. До: Копию только что перенесли / Проверяем папку отправителя. После: ticket.txt / ticket-delivery.txt в этой папке? False.](images/step-2-11.png)
+
 **Что должно получиться**
 
 В списке есть `ticket.txt`, а проверка копии возвращает `False`.
@@ -601,6 +653,8 @@ Test-Path -LiteralPath 'ticket-delivery.txt' -PathType Leaf
 Get-ChildItem -LiteralPath $delivery -Name
 Get-Content -LiteralPath (Join-Path $delivery 'ticket-delivery.txt') -Encoding UTF8
 ```
+
+![Шаг 2.12. До: Копия перенесена в папку получателя. После: ticket-delivery.txt / Заявка: передать учебный комплект / Ответственный: учебная группа.](images/step-2-12.png)
 
 **Что должно получиться**
 
@@ -623,6 +677,8 @@ Set-Content -LiteralPath 'handoff.txt' -Value 'Передано: ticket-delivery
 Add-Content -LiteralPath 'handoff.txt' -Value 'Проверка: файл открывается' -Encoding UTF8
 ```
 
+![Шаг 2.13. До: У отправителя есть ticket.txt. После: handoff.txt / Передано: ticket-delivery.txt / Проверка: файл открывается.](images/step-2-13.png)
+
 **Что должно получиться**
 
 У отправителя есть `handoff.txt` с двумя строками.
@@ -644,6 +700,8 @@ Copy-Item -LiteralPath 'handoff.txt' -Destination $delivery
 Get-ChildItem -LiteralPath $delivery -Name
 ```
 
+![Шаг 2.14. До: У получателя есть ticket-delivery.txt. После: Папка получателя /   ticket-delivery.txt /   handoff.txt.](images/step-2-14.png)
+
 **Что должно получиться**
 
 У получателя два файла: `handoff.txt` и `ticket-delivery.txt`.
@@ -663,6 +721,8 @@ Get-ChildItem -LiteralPath $delivery -Name
 ```powershell
 Invoke-Item -LiteralPath $delivery
 ```
+
+![Шаг 2.15. До: В PowerShell известен путь $delivery. После: Проводник · папка получателя /   handoff.txt /   ticket-delivery.txt.](images/step-2-15.png)
 
 **Что должно получиться**
 
@@ -697,6 +757,8 @@ $docs = [Environment]::GetFolderPath('MyDocuments')
 $docs
 ```
 
+![Шаг 3.1. До: Путь к «Документам» ещё не записан. После: $docs / C:\Users\Student\Documents.](images/step-3-1.png)
+
 **Что должно получиться**
 
 Показывается полный путь к «Документам». Он может вести в OneDrive.
@@ -716,6 +778,8 @@ Windows сама сообщает, где находятся «Документ�
 ```powershell
 Test-Path -LiteralPath $docs -PathType Container
 ```
+
+![Шаг 3.2. До: В $docs записан адрес «Документов». После: True / PowerShell нашёл папку.](images/step-3-2.png)
 
 **Что должно получиться**
 
@@ -739,6 +803,8 @@ $lab = Join-Path $docs "Console-Lab-3-$stamp"
 $lab
 ```
 
+![Шаг 3.3. До: Известна папка «Документы». После: $lab / C:\Users\Student\Documents\ / Console-Lab-3-20261112-123000.](images/step-3-3.png)
+
 **Что должно получиться**
 
 Путь заканчивается на `Console-Lab-3-` и дату со временем.
@@ -761,6 +827,8 @@ Set-Location -LiteralPath $lab
 Get-Location
 ```
 
+![Шаг 3.4. До: Путь учебной папки записан в $lab. После: Папка Console-Lab-3-… создана / Она стала текущей папкой.](images/step-3-4.png)
+
 **Что должно получиться**
 
 Последняя команда показывает путь к новой папке.
@@ -780,6 +848,8 @@ Get-Location
 ```powershell
 New-Item -ItemType Directory -Path 'incoming'
 ```
+
+![Шаг 3.5. До: Учебная папка пуста. После: Внутри появилась папка incoming.](images/step-3-5.png)
 
 **Что должно получиться**
 
@@ -803,6 +873,8 @@ New-Item -ItemType Directory -Path 'delivery'
 Get-ChildItem -Name
 ```
 
+![Шаг 3.6. До: В учебной папке есть incoming. После: delivery / incoming / work.](images/step-3-6.png)
+
 **Что должно получиться**
 
 В списке три папки: `delivery`, `incoming`, `work`.
@@ -823,6 +895,8 @@ Get-ChildItem -Name
 Set-Content -LiteralPath 'incoming\request.txt' -Value 'Обращение: пользователь не находит учебный файл' -Encoding UTF8
 Add-Content -LiteralPath 'incoming\request.txt' -Value 'Задача: подготовить инструкцию' -Encoding UTF8
 ```
+
+![Шаг 3.7. До: Папка incoming пуста. После: incoming\request.txt / Обращение: пользователь не находит учебный файл / Задача: подготовить инструкцию.](images/step-3-7.png)
 
 **Что должно получиться**
 
@@ -845,6 +919,8 @@ Set-Content -LiteralPath 'incoming\instructions.txt' -Value 'Откройте у
 Add-Content -LiteralPath 'incoming\instructions.txt' -Value 'Проверьте имя файла в списке' -Encoding UTF8
 ```
 
+![Шаг 3.8. До: В incoming есть request.txt. После: incoming\instructions.txt / Откройте учебную папку / Проверьте имя файла в списке.](images/step-3-8.png)
+
 **Что должно получиться**
 
 В `incoming` есть два исходника.
@@ -865,6 +941,8 @@ Add-Content -LiteralPath 'incoming\instructions.txt' -Value 'Проверьте 
 Copy-Item -LiteralPath 'incoming\instructions.txt' -Destination 'work\instructions-ready.txt'
 Add-Content -LiteralPath 'work\instructions-ready.txt' -Value 'Если файл не найден, проверьте текущую папку' -Encoding UTF8
 ```
+
+![Шаг 3.9. До: incoming\instructions.txt — 2 строки / Папка work пуста. После: work\instructions-ready.txt — 3 строки / В исходнике осталось 2 строки.](images/step-3-9.png)
 
 **Что должно получиться**
 
@@ -887,6 +965,8 @@ Get-Content -LiteralPath 'incoming\instructions.txt' -Encoding UTF8
 Get-Content -LiteralPath 'work\instructions-ready.txt' -Encoding UTF8
 ```
 
+![Шаг 3.10. До: Исходная и рабочая инструкции готовы. После: Исходник: 2 строки / Рабочая копия: 3 строки / Добавлена подсказка о текущей папке.](images/step-3-10.png)
+
 **Что должно получиться**
 
 Сначала видны две строки, затем три.
@@ -907,6 +987,8 @@ Get-Content -LiteralPath 'work\instructions-ready.txt' -Encoding UTF8
 Copy-Item -LiteralPath 'incoming\request.txt' -Destination 'delivery'
 Get-ChildItem -LiteralPath 'delivery' -Name
 ```
+
+![Шаг 3.11. До: incoming\request.txt / Папка delivery пуста. После: incoming\request.txt — на месте / delivery\request.txt — копия.](images/step-3-11.png)
 
 **Что должно получиться**
 
@@ -929,6 +1011,8 @@ Move-Item -LiteralPath 'work\instructions-ready.txt' -Destination 'delivery'
 Get-ChildItem -LiteralPath 'delivery' -Name
 ```
 
+![Шаг 3.12. До: work\instructions-ready.txt / delivery\request.txt. После: delivery\request.txt / delivery\instructions-ready.txt / В work инструкции уже нет.](images/step-3-12.png)
+
 **Что должно получиться**
 
 В папке выдачи уже два файла.
@@ -949,6 +1033,8 @@ Get-ChildItem -LiteralPath 'delivery' -Name
 Set-Content -LiteralPath 'delivery\handoff.txt' -Value 'Комплект службы поддержки' -Encoding UTF8
 Add-Content -LiteralPath 'delivery\handoff.txt' -Value 'В комплекте: request.txt и instructions-ready.txt' -Encoding UTF8
 ```
+
+![Шаг 3.13. До: В delivery два файла. После: delivery\handoff.txt — третий файл / В отчёте пока две строки.](images/step-3-13.png)
 
 **Что должно получиться**
 
@@ -972,6 +1058,8 @@ Test-Path -LiteralPath 'incoming\instructions.txt' -PathType Leaf
 Test-Path -LiteralPath 'work\instructions-ready.txt' -PathType Leaf
 ```
 
+![Шаг 3.14. До: Комплект в delivery собран / Проверяем исходник и рабочую копию. После: incoming\instructions.txt → True / work\instructions-ready.txt → False.](images/step-3-14.png)
+
 **Что должно получиться**
 
 После списка ответ `True`, затем `False`.
@@ -991,6 +1079,8 @@ Test-Path -LiteralPath 'work\instructions-ready.txt' -PathType Leaf
 ```powershell
 Get-Content -LiteralPath 'delivery\instructions-ready.txt' -Encoding UTF8
 ```
+
+![Шаг 3.15. До: Инструкция перенесена в delivery. После: Откройте учебную папку / Проверьте имя файла в списке / Если файл не найден, проверьте текущую папку.](images/step-3-15.png)
 
 **Что должно получиться**
 
@@ -1012,6 +1102,8 @@ Get-Content -LiteralPath 'delivery\instructions-ready.txt' -Encoding UTF8
 Add-Content -LiteralPath 'delivery\handoff.txt' -Value 'Проверено: исходники сохранены, комплект открывается' -Encoding UTF8
 Get-Content -LiteralPath 'delivery\handoff.txt' -Encoding UTF8
 ```
+
+![Шаг 3.16. До: delivery\handoff.txt — 2 строки. После: delivery\handoff.txt — 3 строки / Новая строка: «Проверено: исходники / сохранены, комплект открывается».](images/step-3-16.png)
 
 **Что должно получиться**
 
