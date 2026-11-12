@@ -69,3 +69,27 @@ jobs:
             }
             Write-Host "PAIR $number PASS"
           }
+      - name: Check CMD and availability of a legacy PowerShell engine
+        shell: cmd
+        run: |
+          ver
+          echo Checking whether CMD accepts a PowerShell cmdlet:
+          Set-Content -LiteralPath readme-cmd-probe.txt -Value probe
+          if not errorlevel 1 exit /b 1
+          if exist readme-cmd-probe.txt exit /b 1
+          echo CMD correctly rejected PowerShell syntax.
+          set "probe=%TEMP%\cmd-class-probe-%RANDOM%-%RANDOM%"
+          mkdir "%probe%" || exit /b 1
+          mkdir "%probe%\delivery" || exit /b 1
+          echo First line>"%probe%\report.txt"
+          echo Second line>>"%probe%\report.txt"
+          copy "%probe%\report.txt" "%probe%\copy.txt" || exit /b 1
+          move "%probe%\copy.txt" "%probe%\delivery\" || exit /b 1
+          if not exist "%probe%\report.txt" exit /b 1
+          if exist "%probe%\copy.txt" exit /b 1
+          fc /b "%probe%\report.txt" "%probe%\delivery\copy.txt" || exit /b 1
+          echo CMD native file operations PASS.
+          echo Checking whether Windows PowerShell 2.0 can start:
+          powershell.exe -NoProfile -Version 2 -Command "$PSVersionTable.PSVersion.ToString()"
+          if errorlevel 1 echo Legacy PowerShell engine could not start on this image.
+          exit /b 0
