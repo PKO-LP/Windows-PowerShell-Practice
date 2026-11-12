@@ -24,7 +24,7 @@ $PSVersionTable.PSVersion
 
 7. Если увидели **7** или вместо `PS ...>` открылась «Командная строка», нажмите **Win+R**, введите `powershell.exe` и нажмите **Enter**. Повторите проверку версии в открывшемся окне.
 
-**Как работать дальше.** В каждом блоке вводите строки по одной. Вставили первую строку → нажали **Enter** → дождались нового приглашения → вставили следующую. Символы `PS ...>` уже есть в окне. Их вводить не надо. Если команда ничего не вывела, но появилась новая строка `PS ...>`, переходите дальше. Используйте одно и то же окно до конца пары.
+**Как работать дальше.** Под каждой подписью «Команда» есть отдельная кнопка копирования. Скопируйте первую команду → вставьте в PowerShell → нажмите **Enter** → дождитесь нового приглашения. Затем скопируйте следующую команду. Символы `PS ...>` уже есть в окне. Их вводить не надо. Если команда ничего не вывела, но появилась новая строка `PS ...>`, переходите дальше. Используйте одно и то же окно до конца пары.
 
 Если открыли несколько окон, продолжайте в том, где уже вводили команды этой пары: в нём сохранены пути к учебным папкам.
 
@@ -34,12 +34,19 @@ $PSVersionTable.PSVersion
 
 ### 3.1. Найдите «Документы»
 
-1. Вставьте **первую строку** блока в окно PowerShell и нажмите **Enter**. Она сохраняет адрес папки «Документы» под именем `$docs`. На этом этапе текст на экране может не появиться.
-2. Дождитесь нового приглашения `PS ...>`. Вставьте **вторую строку** — только `$docs` — и нажмите **Enter**. Теперь PowerShell напечатает сохранённый адрес.
+1. Вставьте блок **«Команда 1»** в окно PowerShell и нажмите **Enter**. Она сохраняет адрес папки «Документы» под именем `$docs`. На этом этапе текст на экране может не появиться.
+2. Дождитесь нового приглашения `PS ...>`. Вставьте блок **«Команда 2»** — только `$docs` — и нажмите **Enter**. Теперь PowerShell напечатает сохранённый адрес.
 3. Сверьте, что на экране появился путь. Если вывода нет, воспользуйтесь подсказкой под рисунком.
+
+**Команда 1**
 
 ```powershell
 $docs = [Environment]::GetFolderPath('MyDocuments')
+```
+
+**Команда 2**
+
+```powershell
 $docs
 ```
 
@@ -59,7 +66,7 @@ Windows сама сообщает, где находятся «Документ�
 
 ### 3.2. Проверьте папку
 
-Введите команды по очереди.
+Копируйте команды по порядку. После каждой нажимайте **Enter**.
 
 ```powershell
 Test-Path -LiteralPath $docs -PathType Container
@@ -81,11 +88,23 @@ Test-Path -LiteralPath $docs -PathType Container
 
 ### 3.3. Придумайте имя учебной папки
 
-Введите команды по очереди.
+Копируйте команды по порядку. После каждой нажимайте **Enter**.
+
+**Команда 1**
 
 ```powershell
 $stamp = Get-Date -Format 'yyyyMMdd-HHmmss'
+```
+
+**Команда 2**
+
+```powershell
 $lab = Join-Path $docs "Console-Lab-3-$stamp"
+```
+
+**Команда 3**
+
+```powershell
 $lab
 ```
 
@@ -105,11 +124,23 @@ $lab
 
 ### 3.4. Создайте папку и войдите
 
-Введите команды по очереди.
+Копируйте команды по порядку. После каждой нажимайте **Enter**.
+
+**Команда 1**
 
 ```powershell
 New-Item -ItemType Directory -Path $lab
+```
+
+**Команда 2**
+
+```powershell
 Set-Location -LiteralPath $lab
+```
+
+**Команда 3**
+
+```powershell
 Get-Location
 ```
 
@@ -129,7 +160,7 @@ Get-Location
 
 ### 3.5. Создайте входящую папку
 
-Введите команды по очереди.
+Копируйте команды по порядку. После каждой нажимайте **Enter**.
 
 ```powershell
 New-Item -ItemType Directory -Path 'incoming'
@@ -151,11 +182,23 @@ New-Item -ItemType Directory -Path 'incoming'
 
 ### 3.6. Создайте папки работы и выдачи
 
-Введите команды по очереди.
+Копируйте команды по порядку. После каждой нажимайте **Enter**.
+
+**Команда 1**
 
 ```powershell
 New-Item -ItemType Directory -Path 'work'
+```
+
+**Команда 2**
+
+```powershell
 New-Item -ItemType Directory -Path 'delivery'
+```
+
+**Команда 3**
+
+```powershell
 Get-ChildItem -Name
 ```
 
@@ -175,10 +218,17 @@ Get-ChildItem -Name
 
 ### 3.7. Создайте заявку
 
-Введите команды по очереди.
+Копируйте команды по порядку. После каждой нажимайте **Enter**.
+
+**Команда 1**
 
 ```powershell
 Set-Content -LiteralPath 'incoming\request.txt' -Value 'Обращение: пользователь не находит учебный файл' -Encoding UTF8
+```
+
+**Команда 2**
+
+```powershell
 Add-Content -LiteralPath 'incoming\request.txt' -Value 'Задача: подготовить инструкцию' -Encoding UTF8
 ```
 
@@ -198,10 +248,17 @@ Add-Content -LiteralPath 'incoming\request.txt' -Value 'Задача: подго
 
 ### 3.8. Создайте исходную инструкцию
 
-Введите команды по очереди.
+Копируйте команды по порядку. После каждой нажимайте **Enter**.
+
+**Команда 1**
 
 ```powershell
 Set-Content -LiteralPath 'incoming\instructions.txt' -Value 'Откройте учебную папку' -Encoding UTF8
+```
+
+**Команда 2**
+
+```powershell
 Add-Content -LiteralPath 'incoming\instructions.txt' -Value 'Проверьте имя файла в списке' -Encoding UTF8
 ```
 
@@ -221,10 +278,17 @@ Add-Content -LiteralPath 'incoming\instructions.txt' -Value 'Проверьте 
 
 ### 3.9. Сделайте рабочую редакцию
 
-Введите команды по очереди.
+Копируйте команды по порядку. После каждой нажимайте **Enter**.
+
+**Команда 1**
 
 ```powershell
 Copy-Item -LiteralPath 'incoming\instructions.txt' -Destination 'work\instructions-ready.txt'
+```
+
+**Команда 2**
+
+```powershell
 Add-Content -LiteralPath 'work\instructions-ready.txt' -Value 'Если файл не найден, проверьте текущую папку' -Encoding UTF8
 ```
 
@@ -244,10 +308,17 @@ Add-Content -LiteralPath 'work\instructions-ready.txt' -Value 'Если файл
 
 ### 3.10. Сравните обе редакции
 
-Введите команды по очереди.
+Копируйте команды по порядку. После каждой нажимайте **Enter**.
+
+**Команда 1**
 
 ```powershell
 Get-Content -LiteralPath 'incoming\instructions.txt' -Encoding UTF8
+```
+
+**Команда 2**
+
+```powershell
 Get-Content -LiteralPath 'work\instructions-ready.txt' -Encoding UTF8
 ```
 
@@ -267,10 +338,17 @@ Get-Content -LiteralPath 'work\instructions-ready.txt' -Encoding UTF8
 
 ### 3.11. Передайте копию заявки
 
-Введите команды по очереди.
+Копируйте команды по порядку. После каждой нажимайте **Enter**.
+
+**Команда 1**
 
 ```powershell
 Copy-Item -LiteralPath 'incoming\request.txt' -Destination 'delivery'
+```
+
+**Команда 2**
+
+```powershell
 Get-ChildItem -LiteralPath 'delivery' -Name
 ```
 
@@ -290,10 +368,17 @@ Get-ChildItem -LiteralPath 'delivery' -Name
 
 ### 3.12. Перенесите рабочую инструкцию
 
-Введите команды по очереди.
+Копируйте команды по порядку. После каждой нажимайте **Enter**.
+
+**Команда 1**
 
 ```powershell
 Move-Item -LiteralPath 'work\instructions-ready.txt' -Destination 'delivery'
+```
+
+**Команда 2**
+
+```powershell
 Get-ChildItem -LiteralPath 'delivery' -Name
 ```
 
@@ -313,10 +398,17 @@ Get-ChildItem -LiteralPath 'delivery' -Name
 
 ### 3.13. Составьте отчёт
 
-Введите команды по очереди.
+Копируйте команды по порядку. После каждой нажимайте **Enter**.
+
+**Команда 1**
 
 ```powershell
 Set-Content -LiteralPath 'delivery\handoff.txt' -Value 'Комплект службы поддержки' -Encoding UTF8
+```
+
+**Команда 2**
+
+```powershell
 Add-Content -LiteralPath 'delivery\handoff.txt' -Value 'В комплекте: request.txt и instructions-ready.txt' -Encoding UTF8
 ```
 
@@ -336,11 +428,23 @@ Add-Content -LiteralPath 'delivery\handoff.txt' -Value 'В комплекте: r
 
 ### 3.14. Проверьте структуру
 
-Введите команды по очереди.
+Копируйте команды по порядку. После каждой нажимайте **Enter**.
+
+**Команда 1**
 
 ```powershell
 Get-ChildItem -Recurse -Name
+```
+
+**Команда 2**
+
+```powershell
 Test-Path -LiteralPath 'incoming\instructions.txt' -PathType Leaf
+```
+
+**Команда 3**
+
+```powershell
 Test-Path -LiteralPath 'work\instructions-ready.txt' -PathType Leaf
 ```
 
@@ -360,7 +464,7 @@ Test-Path -LiteralPath 'work\instructions-ready.txt' -PathType Leaf
 
 ### 3.15. Прочитайте готовую инструкцию
 
-Введите команды по очереди.
+Копируйте команды по порядку. После каждой нажимайте **Enter**.
 
 ```powershell
 Get-Content -LiteralPath 'delivery\instructions-ready.txt' -Encoding UTF8
@@ -382,10 +486,17 @@ Get-Content -LiteralPath 'delivery\instructions-ready.txt' -Encoding UTF8
 
 ### 3.16. Отметьте результат проверки
 
-Введите команды по очереди.
+Копируйте команды по порядку. После каждой нажимайте **Enter**.
+
+**Команда 1**
 
 ```powershell
 Add-Content -LiteralPath 'delivery\handoff.txt' -Value 'Проверено: исходники сохранены, комплект открывается' -Encoding UTF8
+```
+
+**Команда 2**
+
+```powershell
 Get-Content -LiteralPath 'delivery\handoff.txt' -Encoding UTF8
 ```
 

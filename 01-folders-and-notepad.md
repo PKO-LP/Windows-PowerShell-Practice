@@ -24,7 +24,7 @@ $PSVersionTable.PSVersion
 
 7. Если увидели **7** или вместо `PS ...>` открылась «Командная строка», нажмите **Win+R**, введите `powershell.exe` и нажмите **Enter**. Повторите проверку версии в открывшемся окне.
 
-**Как работать дальше.** В каждом блоке вводите строки по одной. Вставили первую строку → нажали **Enter** → дождались нового приглашения → вставили следующую. Символы `PS ...>` уже есть в окне. Их вводить не надо. Если команда ничего не вывела, но появилась новая строка `PS ...>`, переходите дальше. Используйте одно и то же окно до конца пары.
+**Как работать дальше.** Под каждой подписью «Команда» есть отдельная кнопка копирования. Скопируйте первую команду → вставьте в PowerShell → нажмите **Enter** → дождитесь нового приглашения. Затем скопируйте следующую команду. Символы `PS ...>` уже есть в окне. Их вводить не надо. Если команда ничего не вывела, но появилась новая строка `PS ...>`, переходите дальше. Используйте одно и то же окно до конца пары.
 
 Если открыли несколько окон, продолжайте в том, где уже вводили команды этой пары: в нём сохранены пути к учебным папкам.
 
@@ -34,12 +34,19 @@ $PSVersionTable.PSVersion
 
 ### 1.1. Найдите «Документы»
 
-1. Вставьте **первую строку** блока в окно PowerShell и нажмите **Enter**. Она сохраняет адрес папки «Документы» под именем `$docs`. На этом этапе текст на экране может не появиться.
-2. Дождитесь нового приглашения `PS ...>`. Вставьте **вторую строку** — только `$docs` — и нажмите **Enter**. Теперь PowerShell напечатает сохранённый адрес.
+1. Вставьте блок **«Команда 1»** в окно PowerShell и нажмите **Enter**. Она сохраняет адрес папки «Документы» под именем `$docs`. На этом этапе текст на экране может не появиться.
+2. Дождитесь нового приглашения `PS ...>`. Вставьте блок **«Команда 2»** — только `$docs` — и нажмите **Enter**. Теперь PowerShell напечатает сохранённый адрес.
 3. Сверьте, что на экране появился путь. Если вывода нет, воспользуйтесь подсказкой под рисунком.
+
+**Команда 1**
 
 ```powershell
 $docs = [Environment]::GetFolderPath('MyDocuments')
+```
+
+**Команда 2**
+
+```powershell
 $docs
 ```
 
@@ -59,7 +66,7 @@ Windows сама сообщает, где находятся «Документ�
 
 ### 1.2. Проверьте папку
 
-Введите команды по очереди.
+Копируйте команды по порядку. После каждой нажимайте **Enter**.
 
 ```powershell
 Test-Path -LiteralPath $docs -PathType Container
@@ -81,11 +88,23 @@ Test-Path -LiteralPath $docs -PathType Container
 
 ### 1.3. Придумайте имя учебной папки
 
-Введите команды по очереди.
+Копируйте команды по порядку. После каждой нажимайте **Enter**.
+
+**Команда 1**
 
 ```powershell
 $stamp = Get-Date -Format 'yyyyMMdd-HHmmss'
+```
+
+**Команда 2**
+
+```powershell
 $lab = Join-Path $docs "Console-Lab-1-$stamp"
+```
+
+**Команда 3**
+
+```powershell
 $lab
 ```
 
@@ -105,11 +124,23 @@ $lab
 
 ### 1.4. Создайте папку и войдите
 
-Введите команды по очереди.
+Копируйте команды по порядку. После каждой нажимайте **Enter**.
+
+**Команда 1**
 
 ```powershell
 New-Item -ItemType Directory -Path $lab
+```
+
+**Команда 2**
+
+```powershell
 Set-Location -LiteralPath $lab
+```
+
+**Команда 3**
+
+```powershell
 Get-Location
 ```
 
@@ -129,10 +160,17 @@ Get-Location
 
 ### 1.5. Создайте подпапку
 
-Введите команды по очереди.
+Копируйте команды по порядку. После каждой нажимайте **Enter**.
+
+**Команда 1**
 
 ```powershell
 New-Item -ItemType Directory -Path 'original'
+```
+
+**Команда 2**
+
+```powershell
 Get-ChildItem -Name
 ```
 
@@ -152,10 +190,17 @@ Get-ChildItem -Name
 
 ### 1.6. Создайте пустой файл
 
-Введите команды по очереди.
+Копируйте команды по порядку. После каждой нажимайте **Enter**.
+
+**Команда 1**
 
 ```powershell
 New-Item -ItemType File -Path 'original\request.txt'
+```
+
+**Команда 2**
+
+```powershell
 Test-Path -LiteralPath 'original\request.txt' -PathType Leaf
 ```
 
@@ -175,7 +220,7 @@ Test-Path -LiteralPath 'original\request.txt' -PathType Leaf
 
 ### 1.7. Запишите первую строку
 
-Введите команды по очереди.
+Копируйте команды по порядку. После каждой нажимайте **Enter**.
 
 ```powershell
 Set-Content -LiteralPath 'original\request.txt' -Value 'Обращение: подготовить учебный отчёт' -Encoding UTF8
@@ -197,7 +242,7 @@ Set-Content -LiteralPath 'original\request.txt' -Value 'Обращение: по
 
 ### 1.8. Добавьте вторую строку
 
-Введите команды по очереди.
+Копируйте команды по порядку. После каждой нажимайте **Enter**.
 
 ```powershell
 Add-Content -LiteralPath 'original\request.txt' -Value 'Статус: принято' -Encoding UTF8
@@ -219,7 +264,7 @@ Add-Content -LiteralPath 'original\request.txt' -Value 'Статус: приня
 
 ### 1.9. Прочитайте файл
 
-Введите команды по очереди.
+Копируйте команды по порядку. После каждой нажимайте **Enter**.
 
 ```powershell
 Get-Content -LiteralPath 'original\request.txt' -Encoding UTF8
@@ -249,8 +294,15 @@ Get-Command notepad.exe -ErrorAction SilentlyContinue
 
 Если команда показала `notepad.exe`, выполните следующие строки. Если вывода нет, пропустите запуск и перейдите к чтению файла в PowerShell.
 
+**Команда 1**
+
 ```powershell
 $file = Join-Path $lab 'original\request.txt'
+```
+
+**Команда 2**
+
+```powershell
 notepad.exe "$file"
 ```
 
@@ -270,11 +322,23 @@ notepad.exe "$file"
 
 ### 1.11. Сделайте отдельную копию
 
-Введите команды по очереди.
+Копируйте команды по порядку. После каждой нажимайте **Enter**.
+
+**Команда 1**
 
 ```powershell
 New-Item -ItemType Directory -Path 'review'
+```
+
+**Команда 2**
+
+```powershell
 Copy-Item -LiteralPath 'original\request.txt' -Destination 'review\request-copy.txt'
+```
+
+**Команда 3**
+
+```powershell
 Get-ChildItem -LiteralPath 'review' -Name
 ```
 
@@ -294,10 +358,17 @@ Get-ChildItem -LiteralPath 'review' -Name
 
 ### 1.12. Переименуйте копию
 
-Введите команды по очереди.
+Копируйте команды по порядку. После каждой нажимайте **Enter**.
+
+**Команда 1**
 
 ```powershell
 Rename-Item -LiteralPath 'review\request-copy.txt' -NewName 'request-review.txt'
+```
+
+**Команда 2**
+
+```powershell
 Get-ChildItem -LiteralPath 'review' -Name
 ```
 
@@ -317,10 +388,17 @@ Get-ChildItem -LiteralPath 'review' -Name
 
 ### 1.13. Допишите комментарий в копию
 
-Введите команды по очереди.
+Копируйте команды по порядку. После каждой нажимайте **Enter**.
+
+**Команда 1**
 
 ```powershell
 Add-Content -LiteralPath 'review\request-review.txt' -Value 'Комментарий: передано на проверку' -Encoding UTF8
+```
+
+**Команда 2**
+
+```powershell
 Get-Content -LiteralPath 'review\request-review.txt' -Encoding UTF8
 ```
 
@@ -340,10 +418,17 @@ Get-Content -LiteralPath 'review\request-review.txt' -Encoding UTF8
 
 ### 1.14. Проверьте исходник
 
-Введите команды по очереди.
+Копируйте команды по порядку. После каждой нажимайте **Enter**.
+
+**Команда 1**
 
 ```powershell
 Get-Content -LiteralPath 'original\request.txt' -Encoding UTF8
+```
+
+**Команда 2**
+
+```powershell
 Get-ChildItem -Recurse -Name
 ```
 

@@ -24,7 +24,7 @@ $PSVersionTable.PSVersion
 
 7. Если увидели **7** или вместо `PS ...>` открылась «Командная строка», нажмите **Win+R**, введите `powershell.exe` и нажмите **Enter**. Повторите проверку версии в открывшемся окне.
 
-**Как работать дальше.** В каждом блоке вводите строки по одной. Вставили первую строку → нажали **Enter** → дождались нового приглашения → вставили следующую. Символы `PS ...>` уже есть в окне. Их вводить не надо. Если команда ничего не вывела, но появилась новая строка `PS ...>`, переходите дальше. Используйте одно и то же окно до конца пары.
+**Как работать дальше.** Под каждой подписью «Команда» есть отдельная кнопка копирования. Скопируйте первую команду → вставьте в PowerShell → нажмите **Enter** → дождитесь нового приглашения. Затем скопируйте следующую команду. Символы `PS ...>` уже есть в окне. Их вводить не надо. Если команда ничего не вывела, но появилась новая строка `PS ...>`, переходите дальше. Используйте одно и то же окно до конца пары.
 
 Если открыли несколько окон, продолжайте в том, где уже вводили команды этой пары: в нём сохранены пути к учебным папкам.
 
@@ -34,12 +34,19 @@ $PSVersionTable.PSVersion
 
 ### 2.1. Найдите «Документы»
 
-1. Вставьте **первую строку** блока в окно PowerShell и нажмите **Enter**. Она сохраняет адрес папки «Документы» под именем `$docs`. На этом этапе текст на экране может не появиться.
-2. Дождитесь нового приглашения `PS ...>`. Вставьте **вторую строку** — только `$docs` — и нажмите **Enter**. Теперь PowerShell напечатает сохранённый адрес.
+1. Вставьте блок **«Команда 1»** в окно PowerShell и нажмите **Enter**. Она сохраняет адрес папки «Документы» под именем `$docs`. На этом этапе текст на экране может не появиться.
+2. Дождитесь нового приглашения `PS ...>`. Вставьте блок **«Команда 2»** — только `$docs` — и нажмите **Enter**. Теперь PowerShell напечатает сохранённый адрес.
 3. Сверьте, что на экране появился путь. Если вывода нет, воспользуйтесь подсказкой под рисунком.
+
+**Команда 1**
 
 ```powershell
 $docs = [Environment]::GetFolderPath('MyDocuments')
+```
+
+**Команда 2**
+
+```powershell
 $docs
 ```
 
@@ -59,7 +66,7 @@ Windows сама сообщает, где находятся «Документ�
 
 ### 2.2. Проверьте папку
 
-Введите команды по очереди.
+Копируйте команды по порядку. После каждой нажимайте **Enter**.
 
 ```powershell
 Test-Path -LiteralPath $docs -PathType Container
@@ -81,11 +88,23 @@ Test-Path -LiteralPath $docs -PathType Container
 
 ### 2.3. Придумайте имя учебной папки
 
-Введите команды по очереди.
+Копируйте команды по порядку. После каждой нажимайте **Enter**.
+
+**Команда 1**
 
 ```powershell
 $stamp = Get-Date -Format 'yyyyMMdd-HHmmss'
+```
+
+**Команда 2**
+
+```powershell
 $lab = Join-Path $docs "Console-Lab-2-$stamp"
+```
+
+**Команда 3**
+
+```powershell
 $lab
 ```
 
@@ -105,11 +124,23 @@ $lab
 
 ### 2.4. Создайте папку и войдите
 
-Введите команды по очереди.
+Копируйте команды по порядку. После каждой нажимайте **Enter**.
+
+**Команда 1**
 
 ```powershell
 New-Item -ItemType Directory -Path $lab
+```
+
+**Команда 2**
+
+```powershell
 Set-Location -LiteralPath $lab
+```
+
+**Команда 3**
+
+```powershell
 Get-Location
 ```
 
@@ -129,10 +160,17 @@ Get-Location
 
 ### 2.5. Узнайте адрес рабочего стола
 
-Введите команды по очереди.
+Копируйте команды по порядку. После каждой нажимайте **Enter**.
+
+**Команда 1**
 
 ```powershell
 $desktop = [Environment]::GetFolderPath('DesktopDirectory')
+```
+
+**Команда 2**
+
+```powershell
 $desktop
 ```
 
@@ -152,11 +190,23 @@ $desktop
 
 ### 2.6. Создайте папку для передачи
 
-Введите команды по очереди.
+Копируйте команды по порядку. После каждой нажимайте **Enter**.
+
+**Команда 1**
 
 ```powershell
 $delivery = Join-Path $desktop "Console-Delivery-$stamp"
+```
+
+**Команда 2**
+
+```powershell
 New-Item -ItemType Directory -Path $delivery
+```
+
+**Команда 3**
+
+```powershell
 $delivery
 ```
 
@@ -176,8 +226,15 @@ $delivery
 
 **Запасной вариант шага.** Если рабочий стол недоступен, создайте папку получателя в «Документах» и продолжайте с ней.
 
+**Команда 1**
+
 ```powershell
 $delivery = Join-Path $docs "Console-Delivery-$stamp"
+```
+
+**Команда 2**
+
+```powershell
 New-Item -ItemType Directory -Path $delivery
 ```
 
@@ -185,7 +242,7 @@ New-Item -ItemType Directory -Path $delivery
 
 ### 2.7. Проверьте папку назначения
 
-Введите команды по очереди.
+Копируйте команды по порядку. После каждой нажимайте **Enter**.
 
 ```powershell
 Test-Path -LiteralPath $delivery -PathType Container
@@ -207,10 +264,17 @@ Test-Path -LiteralPath $delivery -PathType Container
 
 ### 2.8. Создайте исходник
 
-Введите команды по очереди.
+Копируйте команды по порядку. После каждой нажимайте **Enter**.
+
+**Команда 1**
 
 ```powershell
 Set-Content -LiteralPath 'ticket.txt' -Value 'Заявка: передать учебный комплект' -Encoding UTF8
+```
+
+**Команда 2**
+
+```powershell
 Add-Content -LiteralPath 'ticket.txt' -Value 'Ответственный: учебная группа' -Encoding UTF8
 ```
 
@@ -230,10 +294,17 @@ Add-Content -LiteralPath 'ticket.txt' -Value 'Ответственный: уче
 
 ### 2.9. Сделайте копию в папке отправителя
 
-Введите команды по очереди.
+Копируйте команды по порядку. После каждой нажимайте **Enter**.
+
+**Команда 1**
 
 ```powershell
 Copy-Item -LiteralPath 'ticket.txt' -Destination 'ticket-delivery.txt'
+```
+
+**Команда 2**
+
+```powershell
 Get-ChildItem -Name
 ```
 
@@ -253,7 +324,7 @@ Get-ChildItem -Name
 
 ### 2.10. Перенесите копию на рабочий стол
 
-Введите команды по очереди.
+Копируйте команды по порядку. После каждой нажимайте **Enter**.
 
 ```powershell
 Move-Item -LiteralPath 'ticket-delivery.txt' -Destination $delivery
@@ -275,10 +346,17 @@ Move-Item -LiteralPath 'ticket-delivery.txt' -Destination $delivery
 
 ### 2.11. Проверьте папку отправителя
 
-Введите команды по очереди.
+Копируйте команды по порядку. После каждой нажимайте **Enter**.
+
+**Команда 1**
 
 ```powershell
 Get-ChildItem -LiteralPath $lab -Name
+```
+
+**Команда 2**
+
+```powershell
 Test-Path -LiteralPath 'ticket-delivery.txt' -PathType Leaf
 ```
 
@@ -298,10 +376,17 @@ Test-Path -LiteralPath 'ticket-delivery.txt' -PathType Leaf
 
 ### 2.12. Проверьте папку получателя
 
-Введите команды по очереди.
+Копируйте команды по порядку. После каждой нажимайте **Enter**.
+
+**Команда 1**
 
 ```powershell
 Get-ChildItem -LiteralPath $delivery -Name
+```
+
+**Команда 2**
+
+```powershell
 Get-Content -LiteralPath (Join-Path $delivery 'ticket-delivery.txt') -Encoding UTF8
 ```
 
@@ -321,10 +406,17 @@ Get-Content -LiteralPath (Join-Path $delivery 'ticket-delivery.txt') -Encoding U
 
 ### 2.13. Создайте записку о передаче
 
-Введите команды по очереди.
+Копируйте команды по порядку. После каждой нажимайте **Enter**.
+
+**Команда 1**
 
 ```powershell
 Set-Content -LiteralPath 'handoff.txt' -Value 'Передано: ticket-delivery.txt' -Encoding UTF8
+```
+
+**Команда 2**
+
+```powershell
 Add-Content -LiteralPath 'handoff.txt' -Value 'Проверка: файл открывается' -Encoding UTF8
 ```
 
@@ -344,10 +436,17 @@ Add-Content -LiteralPath 'handoff.txt' -Value 'Проверка: файл отк
 
 ### 2.14. Скопируйте записку получателю
 
-Введите команды по очереди.
+Копируйте команды по порядку. После каждой нажимайте **Enter**.
+
+**Команда 1**
 
 ```powershell
 Copy-Item -LiteralPath 'handoff.txt' -Destination $delivery
+```
+
+**Команда 2**
+
+```powershell
 Get-ChildItem -LiteralPath $delivery -Name
 ```
 
@@ -367,7 +466,7 @@ Get-ChildItem -LiteralPath $delivery -Name
 
 ### 2.15. Откройте папку получателя из консоли
 
-Введите команды по очереди.
+Копируйте команды по порядку. После каждой нажимайте **Enter**.
 
 ```powershell
 Invoke-Item -LiteralPath $delivery
