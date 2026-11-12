@@ -93,3 +93,34 @@ jobs:
           powershell.exe -Version 2.0 -NoProfile -Command "$PSVersionTable.PSVersion.ToString()"
           if errorlevel 1 echo Legacy PowerShell engine could not start on this image.
           exit /b 0
+      - name: Execute README blocks with the Windows PowerShell 2.0 engine
+        if: matrix.runner == 'windows-2022'
+        shell: powershell
+        run: |
+          $legacy = Join-Path $env:RUNNER_TEMP 'readme-legacy.ps1'
+          @'
+          $ErrorActionPreference = 'Stop'
+          $PSVersionTable.PSVersion.ToString()
+          if ($PSVersionTable.PSVersion.Major -ne 2) { throw 'Legacy engine did not start' }
+          $md = [IO.File]::ReadAllText((Join-Path $env:GITHUB_WORKSPACE 'README.md'), [Text.Encoding]::UTF8)
+          $lessons = [regex]::Matches($md, '(?ms)^## [^\r\n]+ ([123])\..*?(?=^## |\z)')
+          if ($lessons.Count -ne 3) { throw 'Expected three pairs' }
+          foreach ($lesson in $lessons) {
+            $number = $lesson.Groups[1].Value
+            $blocks = [regex]::Matches($lesson.Value, '(?ms)^```powershell\r?\n(.*?)^```')
+            foreach ($block in $blocks) {
+              $code = $block.Groups[1].Value.Trim()
+              if ($code.StartsWith('$delivery = Join-Path $docs')) { continue }
+              if ($code -match '(?m)^(notepad\.exe|Invoke-Item)') { continue }
+              try { . ([scriptblock]::Create($code)) }
+              catch {
+                Write-Host "LEGACY FAILED: PAIR $number"
+                Write-Host $code
+                Write-Host $_.Exception.Message
+                break
+              }
+            }
+          }
+          '@ | Set-Content -LiteralPath $legacy -Encoding UTF8
+          powershell.exe -Version 2.0 -NoProfile -ExecutionPolicy Bypass -File $legacy
+          exit $LASTEXITCODE
