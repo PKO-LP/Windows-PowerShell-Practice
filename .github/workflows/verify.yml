@@ -90,6 +90,6 @@ jobs:
           fc /b "%probe%\report.txt" "%probe%\delivery\copy.txt" || exit /b 1
           echo CMD native file operations PASS.
           echo Checking whether Windows PowerShell 2.0 can start:
-          powershell.exe -NoProfile -Version 2 -Command "$PSVersionTable.PSVersion.ToString()"
+          powershell.exe -Version 2.0 -NoProfile -Command "$PSVersionTable.PSVersion.ToString()"
           if errorlevel 1 echo Legacy PowerShell engine could not start on this image.
           exit /b 0
